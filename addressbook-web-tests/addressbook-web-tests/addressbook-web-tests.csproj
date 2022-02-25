@@ -61,7 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContactHelper.cs" />
+    <Compile Include="appmanager\ContactHelper.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
     <Compile Include="model\ContactData.cs" />
@@ -76,6 +76,8 @@
     <Compile Include="test\GroupCreationTests.cs" />
     <Compile Include="test\ContactCreationTests.cs" />
     <Compile Include="test\GroupRemovalTests.cs" />
+    <Compile Include="test\ContactModificationTests.cs" />
+    <Compile Include="test\ContactDeleteTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
