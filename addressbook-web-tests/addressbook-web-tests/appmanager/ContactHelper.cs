@@ -22,7 +22,7 @@ namespace WebAddressbookTests
                 manager.Navigator.ReturnHome();
                 return this;
             }
-            public ContactHelper Modify(string v, ContactData newContact)
+            public ContactHelper Modify(int v, ContactData newContact)
             {
                 manager.Navigator.ReturnHome();
                 SelectContact(v);
@@ -31,7 +31,7 @@ namespace WebAddressbookTests
                 SubmitContactModification();
                 return this;
             }
-            public ContactHelper Delete(string v)
+            public ContactHelper Delete(int v)
             {
                 manager.Navigator.ReturnHome();
                 SelectContact(v);
@@ -57,9 +57,9 @@ namespace WebAddressbookTests
                 driver.FindElement(By.LinkText("add new")).Click();
                 return this;
             }
-            public ContactHelper SelectContact(string index)
+            public ContactHelper SelectContact(int index)
             {
-            driver.FindElement(By.Id(index)).Click(); ;
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
                 return this;
             }
             private ContactHelper InitContactModification()
