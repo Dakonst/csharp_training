@@ -25,15 +25,24 @@ namespace WebAddressbookTests
             public ContactHelper Modify(int v, ContactData newContact)
             {
                 manager.Navigator.ReturnHome();
+                if (!IsElementPresent(By.Name("selected[]")))
+                {
+                    Create(new ContactData("Default", "Default"));
+                }
                 SelectContact(v);
                 InitContactModification();
                 FillContactForm(newContact);
                 SubmitContactModification();
                 return this;
-            }
+
+        }
             public ContactHelper Delete(int v)
             {
                 manager.Navigator.ReturnHome();
+                if (!IsElementPresent(By.Name("selected[]")))
+                {
+                    Create(new ContactData("Default", "Default"));
+                }
                 SelectContact(v);
                 InitContactDelete();
                 SubmitContactDelete();
@@ -42,12 +51,8 @@ namespace WebAddressbookTests
 
             public ContactHelper FillContactForm(ContactData contact)
             {
-                driver.FindElement(By.Name("firstname")).Click();
-                driver.FindElement(By.Name("firstname")).Clear();
-                driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-                driver.FindElement(By.Name("lastname")).Click();
-                driver.FindElement(By.Name("lastname")).Clear();
-                driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+                Type(By.Name("firstname"), contact.Firstname);
+                Type(By.Name("lastname"), contact.Lastname);
                 driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
                 return this;
             }
