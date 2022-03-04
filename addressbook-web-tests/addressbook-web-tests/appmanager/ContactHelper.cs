@@ -24,11 +24,6 @@ namespace WebAddressbookTests
             }
             public ContactHelper Modify(int v, ContactData newContact)
             {
-                manager.Navigator.ReturnHome();
-                if (!IsElementPresent(By.Name("selected[]")))
-                {
-                    Create(new ContactData("Default", "Default"));
-                }
                 SelectContact(v);
                 InitContactModification();
                 FillContactForm(newContact);
@@ -38,11 +33,6 @@ namespace WebAddressbookTests
         }
             public ContactHelper Delete(int v)
             {
-                manager.Navigator.ReturnHome();
-                if (!IsElementPresent(By.Name("selected[]")))
-                {
-                    Create(new ContactData("Default", "Default"));
-                }
                 SelectContact(v);
                 InitContactDelete();
                 SubmitContactDelete();
