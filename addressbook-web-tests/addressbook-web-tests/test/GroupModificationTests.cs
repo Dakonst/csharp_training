@@ -22,7 +22,15 @@ namespace WebAddressbookTests
             {
                 app.Groups.Create(new GroupData("Default"));
             }
-            app.Groups.Modify(1, newData);
+            List<GroupData> oldGgroups = app.Groups.GetGroupList();
+
+            app.Groups.Modify(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGgroups[0].Name = newData.Name;
+            oldGgroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGgroups, newGroups);
         }
 
     }

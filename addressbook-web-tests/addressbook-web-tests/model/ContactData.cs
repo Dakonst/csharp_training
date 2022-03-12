@@ -16,6 +16,28 @@ namespace WebAddressbookTests
             this.firstname = firstname;
             this.lastname = lastname;
         }
+        public bool Equals(ContactData other)
+        {
+            if (object.ReferenceEquals(other, null)) return false;
+            if (object.ReferenceEquals(this, other)) return true;
+            return ((firstname == other.Firstname) && (lastname == other.Lastname));
+
+        }
+
+        public override string ToString()
+        {
+            return Firstname + " " + Lastname;
+        }
+        public int CompareToF(ContactData other)
+        {
+            if (object.ReferenceEquals(other, null)) return 1;
+            return firstname.CompareTo(other.Firstname);
+        }
+        public int CompareToL(ContactData other)
+        {
+            if (object.ReferenceEquals(other, null)) return 1;
+            return lastname.CompareTo(other.Lastname);
+        }
         public string Firstname
         {
             get

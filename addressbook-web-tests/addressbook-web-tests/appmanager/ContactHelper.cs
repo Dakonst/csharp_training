@@ -77,5 +77,19 @@ namespace WebAddressbookTests
                 driver.SwitchTo().Alert().Accept();
                 return this;
             }
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.ReturnHome();
+            //ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr#entry"));
+            ICollection<IWebElement> elements1 = driver.FindElements(By.CssSelector("tr#entry td:nth-of-type(2)"));
+            ICollection<IWebElement> elements2 = driver.FindElements(By.CssSelector("tr#entry td:nth-of-type(3)"));
+            int count = elements1.Count();
+            for(int i=1; i<=count; i++)
+            {
+                contacts.Add(new ContactData(elements1.ElementAt(i).Text, elements2.ElementAt(i).Text));
+            }
+            return contacts;
+        }
     }
 }

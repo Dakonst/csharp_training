@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
 
@@ -18,7 +19,13 @@ namespace WebAddressbookTests
             {
                 app.Groups.Create(new GroupData("Default"));
             }
-            app.Groups.Remove(1);
+            List<GroupData> oldGgroups = app.Groups.GetGroupList();
+            
+            app.Groups.Remove(0);
+            
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGgroups.RemoveAt(0);
+            Assert.AreEqual(oldGgroups, newGroups);
         }
     }
 }
