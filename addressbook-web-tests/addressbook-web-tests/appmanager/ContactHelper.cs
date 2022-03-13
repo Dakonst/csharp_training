@@ -54,7 +54,7 @@ namespace WebAddressbookTests
             }
             public ContactHelper SelectContact(int index)
             {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
                 return this;
             }
             private ContactHelper InitContactModification()
@@ -82,12 +82,12 @@ namespace WebAddressbookTests
             List<ContactData> contacts = new List<ContactData>();
             manager.Navigator.ReturnHome();
             //ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr#entry"));
-            ICollection<IWebElement> elements1 = driver.FindElements(By.CssSelector("tr#entry td:nth-of-type(2)"));
-            ICollection<IWebElement> elements2 = driver.FindElements(By.CssSelector("tr#entry td:nth-of-type(3)"));
+            ICollection<IWebElement> elements1 = driver.FindElements(By.CssSelector("tr[name=entry] td:nth-of-type(2)"));
+            ICollection<IWebElement> elements2 = driver.FindElements(By.CssSelector("tr[name=entry] td:nth-of-type(3)"));
             int count = elements1.Count();
-            for(int i=1; i<=count; i++)
+            for(int i=0; i<count; i++)
             {
-                contacts.Add(new ContactData(elements1.ElementAt(i).Text, elements2.ElementAt(i).Text));
+                contacts.Add(new ContactData(elements2.ElementAt(i).Text, elements1.ElementAt(i).Text));
             }
             return contacts;
         }

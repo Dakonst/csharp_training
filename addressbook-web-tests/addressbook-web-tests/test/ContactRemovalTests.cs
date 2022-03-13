@@ -1,5 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
 
@@ -16,7 +19,15 @@ namespace WebAddressbookTests
             {
                 app.Contacts.Create(new ContactData("Default", "Default"));
             }
-            app.Contacts.Delete(1);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Delete(0);
+
+            Thread.Sleep(1000);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
