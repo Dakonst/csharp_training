@@ -44,6 +44,7 @@ namespace WebAddressbookTests
                 Type(By.Name("firstname"), contact.Firstname);
                 Type(By.Name("lastname"), contact.Lastname);
                 driver.FindElement(By.XPath("//div[@id='content']/form/input[21]")).Click();
+                contactCache = null;
                 return this;
             }
 
@@ -64,12 +65,14 @@ namespace WebAddressbookTests
             }
             private ContactHelper SubmitContactModification()
             {
-                driver.FindElement(By.Name("update")).Click(); ;
+                driver.FindElement(By.Name("update")).Click();
+                contactCache = null;
                 return this;
             }
             private ContactHelper InitContactDelete()
             {
                 driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+                contactCache = null;
                 return this;
             }
             private ContactHelper SubmitContactDelete()
@@ -77,19 +80,23 @@ namespace WebAddressbookTests
                 driver.SwitchTo().Alert().Accept();
                 return this;
             }
+
+        private List<ContactData> contactCache = null;
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.ReturnHome();
-            //ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr#entry"));
-            ICollection<IWebElement> elements1 = driver.FindElements(By.CssSelector("tr[name=entry] td:nth-of-type(2)"));
-            ICollection<IWebElement> elements2 = driver.FindElements(By.CssSelector("tr[name=entry] td:nth-of-type(3)"));
-            int count = elements1.Count();
-            for(int i=0; i<count; i++)
+            if (contactCache == null)
             {
-                contacts.Add(new ContactData(elements2.ElementAt(i).Text, elements1.ElementAt(i).Text));
+                contactCache = new List<ContactData>();
+                manager.Navigator.ReturnHome();
+                ICollection<IWebElement> elements1 = driver.FindElements(By.CssSelector("tr[name=entry] td:nth-of-type(2)"));
+                ICollection<IWebElement> elements2 = driver.FindElements(By.CssSelector("tr[name=entry] td:nth-of-type(3)"));
+                int count = elements1.Count();
+                for (int i = 0; i < count; i++)
+                {
+                    contactCache.Add(new ContactData(elements2.ElementAt(i).Text, elements1.ElementAt(i).Text));
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
     }
 }
