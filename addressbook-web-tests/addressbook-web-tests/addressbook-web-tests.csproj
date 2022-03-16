@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="appmanager\ContactHelper.cs" />
     <Compile Include="AuthTestBase.cs" />
+    <Compile Include="ContactInformationTest.cs" />
     <Compile Include="LoginTests.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="appmanager\HelperBase.cs" />
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
+    <Compile Include="SearchTests.cs" />
     <Compile Include="test\GroupModificationTests.cs" />
     <Compile Include="test\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
