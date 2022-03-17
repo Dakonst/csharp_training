@@ -66,6 +66,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
             return this;
         }
+
+        private ContactHelper InitWatchContactProperties()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
+            return this;
+        }
         private ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -137,6 +143,14 @@ namespace WebAddressbookTests
                 Address = address,
                 AllPhones = allPhones
             };
+        }
+
+        public string GetContactInformationFromProperties(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContact(index);
+            InitWatchContactProperties();
+            return driver.FindElement(By.CssSelector("div#content")).Text;
         }
 
         public int GetNumberOfSearchResults()
