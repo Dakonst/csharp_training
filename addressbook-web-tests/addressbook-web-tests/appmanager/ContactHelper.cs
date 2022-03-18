@@ -137,6 +137,24 @@ namespace WebAddressbookTests
 
         }
 
+        public string GetStringInfoFromForm(ContactData info)
+        {
+            string part1 = info.Firstname + " " + info.Lastname ;
+            if (info.Address != null) part1 = part1 + "\r\n" + info.Address;
+
+            string part2 = null;
+            if (info.HomePhone != "") part2 = "H: " + info.HomePhone + "\r\n";
+            if (info.MobilePhone != "") part2 = part2 + "M: " + info.MobilePhone + "\r\n";
+            if (info.WorkPhone != "") part2 = part2 + "W: " + info.WorkPhone + "\r\n";
+
+            string part3 = null;
+            if (info.Email != "") part3 = part3 + info.Email + "\r\n";
+            if (info.Email2 != "") part3 = part3 + info.Email2 + "\r\n";
+            if (info.Email3 != "") part3 = part3 + info.Email3 + "\r\n";
+
+            return (part1 +"\r\n" + "\r\n" + part2 + "\r\n" + part3).
+                Replace("\r\n\r\n\r\n", "\r\n\r\n").Trim(new Char[] { ' ', '\r', '\n' }); 
+        }
         public ContactData GetContactInformationFromTable(int index)
         {
             IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"));
@@ -153,6 +171,7 @@ namespace WebAddressbookTests
                 AllEmail = allEmail
             };
         }
+
 
         public string GetContactInformationFromProperties(int index)
         {

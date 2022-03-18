@@ -30,10 +30,10 @@ namespace WebAddressbookTests
         {
             string fromProperties = app.Contacts.GetContactInformationFromProperties(0);
             ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
-            string fromFormUnited = fromForm.Firstname + fromForm.Lastname + fromForm.Address + fromForm.AllPhones;
-            
-            fromProperties = Regex.Replace(fromProperties, "[ \r\nHWM:]", "");
-            fromFormUnited = Regex.Replace(fromFormUnited, "[\r\n]", "");
+            string fromFormUnited = app.Contacts.GetStringInfoFromForm(fromForm);
+
+            //fromProperties = Regex.Replace(fromProperties, "[ \r\nHWM:]", "");
+            //fromFormUnited = Regex.Replace(fromFormUnited, "[\r\n]", "");
 
             Assert.AreEqual(fromProperties, fromFormUnited);
         }
