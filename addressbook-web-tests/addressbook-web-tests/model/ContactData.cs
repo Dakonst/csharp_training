@@ -54,7 +54,7 @@ namespace WebAddressbookTests
         private string CleanUp(string phone)
         {
             if (phone == null || phone == "") return "";
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[- ()]", "") + "\r\n";
         }
 
         public bool Equals(ContactData other)

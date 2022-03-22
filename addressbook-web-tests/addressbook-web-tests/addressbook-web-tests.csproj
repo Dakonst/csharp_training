@@ -84,6 +84,9 @@
     <Compile Include="test\ContactRemovalTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="groups.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
