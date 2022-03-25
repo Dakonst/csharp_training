@@ -59,7 +59,8 @@ namespace addressbook_tes_tdata_generators
                 writer.Close();
                 //}
             }
-            if (subject == "contacts")
+
+            else if (subject == "contacts")
             {
                 List<ContactData> contacts = new List<ContactData>();
                 for (int i = 0; i < count; i++)
