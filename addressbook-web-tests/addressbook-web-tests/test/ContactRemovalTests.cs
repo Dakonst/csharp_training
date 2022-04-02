@@ -9,7 +9,7 @@ using OpenQA.Selenium;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
         [Test]
         public void ContactRemovalTest()
@@ -19,13 +19,14 @@ namespace WebAddressbookTests
             {
                 app.Contacts.Create(new ContactData("Default", "Default"));
             }
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
 
-            app.Contacts.Delete(0);
+            ContactData toBeRemoved = oldContacts[0];
+            app.Contacts.Delete(toBeRemoved);
 
             Thread.Sleep(1000);
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.RemoveAt(0);
             Assert.AreEqual(oldContacts, newContacts);
         }

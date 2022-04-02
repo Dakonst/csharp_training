@@ -24,10 +24,50 @@ namespace WebAddressbookTests
             return this;
         }
 
+        internal void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGtoup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        private void CommitAddingContactToGtoup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public ContactHelper SelectContact(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+            return this;
+        }
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
 
         public ContactHelper Modify(int v, ContactData newContact)
         {
             SelectContact(v);
+            InitContactModification();
+            FillContactForm(newContact);
+            SubmitContactModification();
+            return this;
+
+        }
+
+        public ContactHelper Modify(ContactData contact, ContactData newContact)
+        {
+            SelectContact(contact.Id);
             InitContactModification();
             FillContactForm(newContact);
             SubmitContactModification();
@@ -41,7 +81,13 @@ namespace WebAddressbookTests
             SubmitContactDelete();
             return this;
         }
-
+        public ContactHelper Delete(ContactData contact)
+        {
+            SelectContact(contact.Id);
+            InitContactDelete();
+            SubmitContactDelete();
+            return this;
+        }
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.Firstname);
