@@ -34,10 +34,15 @@ namespace WebAddressbookTests
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
-
-        private void CommitAddingContactToGtoup()
+        internal void DeleteContactFromGroup(ContactData contact, GroupData group)
         {
-            driver.FindElement(By.Name("add")).Click();
+            manager.Navigator.OpenHomePage();
+            SetGroupFilter(group.Name);
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitDeletingContactFromGtoup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
 
@@ -113,6 +118,11 @@ namespace WebAddressbookTests
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
 
+        private void SetGroupFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
         private ContactHelper InitWatchContactProperties()
         {
             driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
@@ -134,6 +144,16 @@ namespace WebAddressbookTests
         {
             driver.SwitchTo().Alert().Accept();
             return this;
+        }
+
+        private void CommitAddingContactToGtoup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void CommitDeletingContactFromGtoup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
         }
 
         private List<ContactData> contactCache = null;
