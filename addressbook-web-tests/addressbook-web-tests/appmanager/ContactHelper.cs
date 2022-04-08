@@ -56,7 +56,7 @@ namespace WebAddressbookTests
 
         }*/
 
-        public ContactHelper Modify(int v, ContactData newContact)
+        public ContactHelper Modify(string v, ContactData newContact)
         {
             InitContactModification(v);
             FillContactForm(newContact);
@@ -105,6 +105,14 @@ namespace WebAddressbookTests
         private ContactHelper InitContactModification(int contactId)
         {
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (contactId + 2) + "]/td[8]/a/img")).Click();
+            //driver.FindElement(By.XPath("//td[@class='center']/input[@id=contactId]")).Click();
+            return this;
+        }
+        private ContactHelper InitContactModification(string contactId)
+        {
+            //driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (contactId + 2) + "]/td[8]/a/img")).Click();
+            //driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr/td/input[@id='16']//ancestor::tr/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr/td/input[@id='" + contactId + "']//ancestor::tr/td[8]/a/img")).Click();
             return this;
         }
 
