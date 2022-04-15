@@ -84,6 +84,10 @@ namespace WebAddressbookTests
             return ((Firstname == other.Firstname) && (Lastname == other.Lastname));
 
         }
+        public override int GetHashCode()
+        {
+            return Firstname.GetHashCode() + Lastname.GetHashCode() + Id.GetHashCode();
+        }
 
         public override string ToString()
         {

@@ -12,6 +12,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
@@ -46,7 +47,8 @@ namespace WebAddressbookTests
             
             app.Contacts.Create(contact);
 
-           List<ContactData> newContacts = ContactData.GetAll();
+            List<ContactData> newContacts = ContactData.GetAll();
+
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
