@@ -12,28 +12,33 @@ namespace WebAddressbookTests
         [Test]
         public void TestAddingContactToGroup()
         {
-            if (GroupData.GetAll() == null)
+            if (GroupData.GetAll().Count() == 0)
             {
                 List<GroupData> groups = new List<GroupData>();
-                groups.Add(new GroupData("NewGroupName"));
+                app.Groups.Create(new GroupData("NewGroupName")
+                {
+                    Header = "New Header",
+                    Footer = "New Footer"
+                });
             }
             
-            GroupData group = GroupData.GetAll()[0];
+            GroupData group = GroupData.GetAll().ElementAt(0);
             
-            if (ContactData.GetAll() == null)
+            if (ContactData.GetAll().Count() == 0)
             {
                 List<ContactData> contacts = new List<ContactData>();
-                contacts.Add(new ContactData("ImyaNew", "FamiliyaNew"));
+                app.Contacts.Create(new ContactData("ImyaNew", "FamiliyaNew"));
             }
             int iGroup;
             for (iGroup = 0; iGroup < GroupData.GetAll().Count(); iGroup++)
             {
                 GroupData group2 = GroupData.GetAll()[iGroup];
                 List<ContactData> oldList = group2.GetContacts();
-                ContactData contact = ContactData.GetAll().Except(oldList).First();
+                int n = ContactData.GetAll().Except(oldList).Count();
 
-                if (contact != null)
+                if (ContactData.GetAll().Except(oldList).Count() != 0)
                 {
+                    ContactData contact = ContactData.GetAll().Except(oldList).First();
                     app.Contacts.AddContactToGroup(contact, group2);
                     List<ContactData> newList = group2.GetContacts();
                     oldList.Add(contact);
@@ -46,10 +51,11 @@ namespace WebAddressbookTests
             if (iGroup == GroupData.GetAll().Count())
             {
                 List<ContactData> contacts = new List<ContactData>();
-                ContactData contactNew = new ContactData("Name1", "LastName1");
-                contacts.Add(contactNew);
+                app.Contacts.Create(new ContactData("Name1", "LastName1"));
 
                 List<ContactData> oldList2 = group.GetContacts();
+
+                ContactData contactNew = ContactData.GetAll().Except(oldList2).First();
 
                 app.Contacts.AddContactToGroup(contactNew, GroupData.GetAll()[0]);
                     
@@ -73,7 +79,7 @@ namespace WebAddressbookTests
                 GroupData group = GroupData.GetAll()[iGroup];
                 List<ContactData> oldList = group.GetContacts();
 
-                if (oldList != null)
+                if (oldList.Count() != 0)
                 {
                     ContactData contact = oldList.First();
 
@@ -91,11 +97,11 @@ namespace WebAddressbookTests
             }
             if (iGroup == GroupData.GetAll().Count())
             {
-                List<ContactData> contacts = new List<ContactData>();
-                ContactData contactNew = new ContactData("Name1", "LastName1");
-                contacts.Add(contactNew);
+              List<ContactData> contacts = new List<ContactData>();
+                app.Contacts.Create(new ContactData("Name1", "LastName1"));
 
                 GroupData group = GroupData.GetAll()[0];
+                ContactData contactNew = ContactData.GetAll().First();
 
                 app.Contacts.AddContactToGroup(contactNew, GroupData.GetAll()[0]);
                 List<ContactData> oldList2 = group.GetContacts();
